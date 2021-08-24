@@ -5,4 +5,4 @@
 - [haikei app](https://haikei.app/).
 
 ### JS Libraries
-- - [KUTE.js](https://thednp.github.io/kute.js/).
+- [KUTE.js](https://thednp.github.io/kute.js/).
