@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "start:prisma": "npx prisma studio --schema ./src/prisma/schema.prisma --port 5252",
+    "start": "node src/index.js"
+  },
   "dependencies": {
     "@prisma/client": "^3.13.0",
     "apollo-server": "^3.6.7",

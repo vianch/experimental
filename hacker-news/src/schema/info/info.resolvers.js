@@ -1,36 +1,28 @@
-const links = [
-  {
-    id: "link-0",
-    url: "https://www.howtographql.com/graphql-js/2-a-simple-query/",
-    description: "Fullstack tutorial for GraphQL",
-  },
-];
-
 const infoResolvers = {
   Query: {
     info: () => "This is the API of a Hackernews!",
-    feed: () => links,
+    feed: async (parent, args, context) => {
+      return context.prisma.link.findMany()
+    },
   },
 
   Mutation: {
-    addPost: (parent, args) => {
-      let idCount = links.length;
-      const link = {
-        id: `link-${idCount++}`,
-        description: args.description,
-        url: args.url,
-      };
-
-      links.push(link);
-
-      return link;
+    addPost: (parent, args, context, info) => {
+      const newLink = context.prisma.link.create({
+        data: {
+          url: args.url,
+          description: args.description,
+        },
+      })
+      return newLink
     },
 
-    deletePost: (parent, args) => {
-      const linkIndex = links.findIndex(link => link.id === args.id);
-      const deletedLink = links[linkIndex];
-      links.splice(linkIndex, 1);
-      return deletedLink;
+    deletePost: (parent, args, context, info) => {
+      return context.prisma.link.delete({
+        where: {
+          id: parseInt(args.id),
+        },
+      });
     },
   },
 
