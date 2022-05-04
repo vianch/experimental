@@ -1,13 +1,17 @@
 import { ApolloServer } from 'apollo-server-micro';
+import { IncomingMessage, ServerResponse } from "http";
 import Cors from 'micro-cors'; // Because Apollo v3 doesn't open local studio, is opening an external url
 
-import { typeDefs, resolvers } from '../../graphql/links';
+import context from "../../graphql/context";
+import { resolvers } from '../../graphql/links';
+import { schema } from "../../graphql/schema";
 
 const cors = Cors();
-const apolloServer = new ApolloServer({ typeDefs, resolvers });
+// const apolloServer = new ApolloServer({ typeDefs, resolvers, context });
+const apolloServer = new ApolloServer({ schema, resolvers, context });
 const startServer = apolloServer.start();
 
-export default cors(async function handler(request, response) {
+export default cors(async function handler(request: IncomingMessage, response: ServerResponse) {
   if (request.method === 'OPTIONS') {
     response.end();
     return false;

@@ -1,2 +1,2 @@
-export * from './links.types';
+export * from './links.types.old';
 export * from './links.resolvers';
